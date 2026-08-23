@@ -1,0 +1,9 @@
+<div class="dw-comment-card">
+  <div class="dw-comment-header">
+    <span class="dw-comment-author"><%= comment.author %></span>
+    <span class="dw-comment-time"><%= new Date(comment.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %></span>
+  </div>
+  <div class="dw-comment-content">
+    <%= comment.content %>
+  </div>
+</div>

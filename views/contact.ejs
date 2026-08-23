@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <!-- Floating Particles -->
+  <div class="dw-particles">
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+  </div>
+
+  <div class="dw-contact-container">
+    <h1 class="dw-contact-title">Send a Signal</h1>
+    <p class="dw-contact-subtitle">Drop a message into the deep. No account needed — just your words.</p>
+
+    <!-- Flash Messages -->
+    <% if (success) { %>
+      <div class="dw-alert dw-alert-success">✓ <%= success %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="dw-alert dw-alert-error">✗ <%= error %></div>
+    <% } %>
+
+    <div class="dw-form">
+      <form action="/contact" method="POST">
+        <div class="dw-form-group">
+          <label class="dw-form-label" for="message">Your Message</label>
+          <textarea id="message" name="message" class="dw-form-textarea"
+                    placeholder="Write something..."
+                    maxlength="2000" required
+                    style="min-height: 180px;"></textarea>
+          <span class="dw-form-hint">Max 2000 characters · 3 submissions per hour · Your IP is logged for abuse prevention</span>
+        </div>
+        <button type="submit" class="dw-btn dw-btn-primary">Transmit Message</button>
+      </form>
+    </div>
+  </div>
+
+  <%- include('./partials/footer') %>
+</body>
+</html>

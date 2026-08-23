@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <!-- Floating Particles -->
+  <div class="dw-particles">
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="dw-hero">
+    <div class="dw-sonar-ring"></div>
+    <div class="dw-sonar-ring"></div>
+    <div class="dw-sonar-ring"></div>
+
+    <h1 class="dw-hero-title">fakadoe.dev</h1>
+    <p class="dw-hero-subtitle">
+      Full-stack developer exploring the depths of code. 
+      Scroll down to descend into my projects — the deeper you go, the darker it gets.
+    </p>
+    <span class="dw-hero-depth">▾ Scroll to dive ▾</span>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="dw-section">
+    <h2 class="dw-section-title">Projects</h2>
+
+    <% if (projects && projects.length > 0) { %>
+      <div class="dw-project-grid">
+        <% projects.forEach(function(project) { %>
+          <a href="/project/<%= project.slug %>" class="dw-project-card" id="project-<%= project.slug %>">
+            <h3 class="dw-project-card-title"><%= project.title %></h3>
+            <p class="dw-project-card-excerpt">
+              <%= project.content.replace(/[#*`\[\]|>_~]/g, '').substring(0, 160) %>...
+            </p>
+            <div class="dw-tags">
+              <% project.tags.forEach(function(tag) { %>
+                <span class="dw-tag"><%= tag %></span>
+              <% }); %>
+            </div>
+            <div class="dw-project-card-meta">
+              <span><%= new Date(project.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+              <span>→ Read more</span>
+            </div>
+          </a>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="dw-no-comments">
+        <p>No projects yet. The depths are empty... for now.</p>
+      </div>
+    <% } %>
+  </section>
+
+  <%- include('./partials/footer') %>
+</body>
+</html>

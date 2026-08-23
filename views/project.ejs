@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <!-- Floating Particles -->
+  <div class="dw-particles">
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+    <div class="dw-particle"></div>
+  </div>
+
+  <article class="dw-project-detail">
+    <!-- Flash Messages -->
+    <% if (success) { %>
+      <div class="dw-alert dw-alert-success">✓ <%= success %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="dw-alert dw-alert-error">✗ <%= error %></div>
+    <% } %>
+
+    <!-- Project Header -->
+    <header class="dw-project-header">
+      <h1 class="dw-project-title"><%= project.title %></h1>
+      <div class="dw-project-meta">
+        <span class="dw-project-meta-item">
+          📅 <%= new Date(project.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+        </span>
+        <% if (project.tags && project.tags.length > 0) { %>
+          <div class="dw-tags">
+            <% project.tags.forEach(function(tag) { %>
+              <span class="dw-tag"><%= tag %></span>
+            <% }); %>
+          </div>
+        <% } %>
+      </div>
+    </header>
+
+    <!-- Project Content (rendered Markdown) -->
+    <div class="dw-project-content">
+      <%- renderedContent %>
+    </div>
+
+    <!-- Comments Section -->
+    <section class="dw-comments-section" id="comments">
+      <h2 class="dw-comments-title">Dive Log — <%= comments.length %> <%= comments.length === 1 ? 'entry' : 'entries' %></h2>
+
+      <% if (comments.length > 0) { %>
+        <div class="dw-comment-list">
+          <% comments.forEach(function(comment) { %>
+            <%- include('./partials/comment-card', { comment }) %>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <div class="dw-no-comments">
+          No dive log entries yet. Be the first to leave a mark in the deep.
+        </div>
+      <% } %>
+
+      <!-- Comment Form -->
+      <div class="dw-form">
+        <h3 class="dw-form-title">Leave a Dive Log Entry</h3>
+        <form action="/comments/<%= project.id %>" method="POST">
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="author">Diver Name</label>
+            <input type="text" id="author" name="author" class="dw-form-input"
+                   placeholder="Anonymous Diver" maxlength="50" autocomplete="off">
+            <span class="dw-form-hint">Leave blank to post anonymously</span>
+          </div>
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="content">Message</label>
+            <textarea id="content" name="content" class="dw-form-textarea"
+                      placeholder="What do you think about this project?"
+                      maxlength="1000" required></textarea>
+            <span class="dw-form-hint">Max 1000 characters · 3 submissions per hour</span>
+          </div>
+          <button type="submit" class="dw-btn dw-btn-primary">Submit Entry</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Back Link -->
+    <div style="margin-top: var(--space-2xl);">
+      <a href="/" class="dw-btn dw-btn-ghost">← Back to Surface</a>
+    </div>
+  </article>
+
+  <%- include('./partials/footer') %>
+</body>
+</html>

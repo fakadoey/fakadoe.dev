@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <div class="dw-error-container">
+    <div class="dw-error-code"><%= statusCode %></div>
+    <h1 class="dw-error-title"><%= title %></h1>
+    <p class="dw-error-message"><%= message %></p>
+    <a href="/" class="dw-btn dw-btn-primary">← Return to Surface</a>
+  </div>
+
+  <%- include('./partials/footer') %>
+</body>
+</html>

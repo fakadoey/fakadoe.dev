@@ -1,0 +1,20 @@
+<nav class="dw-navbar">
+  <a href="/" class="dw-navbar-brand">fakadoe.dev</a>
+
+  <button class="dw-nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="dw-navbar-links" id="navLinks">
+    <a href="/" class="<%= typeof currentPath !== 'undefined' && currentPath === '/' ? 'active' : '' %>">Home</a>
+    <a href="/contact" class="<%= typeof currentPath !== 'undefined' && currentPath === '/contact' ? 'active' : '' %>">Contact</a>
+  </div>
+</nav>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>

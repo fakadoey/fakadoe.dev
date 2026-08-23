@@ -1,0 +1,28 @@
+<footer class="dw-footer">
+  <span>© 2026 fakadoe.dev — All systems nominal</span>
+  <div class="dw-depth-indicator">
+    <span id="depth-indicator">0% depth</span>
+  </div>
+</footer>
+
+<!-- GDPR Banner -->
+<div class="dw-gdpr-banner" id="gdprBanner">
+  <p>This site uses cookies for essential functionality. <a href="/contact">Learn more</a></p>
+  <button class="dw-btn dw-btn-primary dw-btn-sm" id="acceptCookies">Accept</button>
+</div>
+
+<!-- Scroll Depth Script (Terser-minified) -->
+<script src="/js/depth.min.js" defer></script>
+
+<!-- GDPR Logic (inline since it's trivial) -->
+<script>
+  document.getElementById('acceptCookies').addEventListener('click', function() {
+    document.getElementById('gdprBanner').style.display = 'none';
+    localStorage.setItem('cookiesAccepted', 'true');
+  });
+  window.addEventListener('DOMContentLoaded', function() {
+    if (!localStorage.getItem('cookiesAccepted')) {
+      document.getElementById('gdprBanner').style.display = 'flex';
+    }
+  });
+</script>

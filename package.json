@@ -1,0 +1,32 @@
+{
+  "name": "fakadoe-dev",
+  "version": "2.0.0",
+  "description": "Deep Water Portfolio — Secure modular portfolio and blogging platform.",
+  "license": "ISC",
+  "author": "fakadoe",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "seed": "node seed.js",
+    "build:js": "node scripts/minify.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.3.1",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "marked": "^15.0.4",
+    "sql.js": "^1.11.0",
+    "terser": "^5.37.0",
+    "xss": "^1.0.15"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <div class="dw-admin-container">
+    <!-- Admin Header -->
+    <div class="dw-admin-header">
+      <h1 class="dw-admin-title">⚓ Command Center</h1>
+      <a href="/admin/logout" class="dw-btn dw-btn-ghost dw-btn-sm">Logout</a>
+    </div>
+
+    <!-- Flash Messages -->
+    <% if (success) { %>
+      <div class="dw-alert dw-alert-success">✓ <%= success %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="dw-alert dw-alert-error">✗ <%= error %></div>
+    <% } %>
+
+    <!-- Stats Cards -->
+    <div class="dw-admin-stats">
+      <div class="dw-stat-card">
+        <div class="dw-stat-value"><%= projectCount %></div>
+        <div class="dw-stat-label">Projects</div>
+      </div>
+      <div class="dw-stat-card">
+        <div class="dw-stat-value"><%= commentCount %></div>
+        <div class="dw-stat-label">Comments</div>
+      </div>
+      <div class="dw-stat-card">
+        <div class="dw-stat-value"><%= messageCount %></div>
+        <div class="dw-stat-label">Messages</div>
+      </div>
+    </div>
+
+    <!-- ═══ CREATE NEW PROJECT ═══ -->
+    <div class="dw-admin-panel">
+      <button class="dw-collapsible-toggle" onclick="toggleCollapsible('createForm')">
+        + Create New Project
+      </button>
+      <div class="dw-collapsible-content" id="createForm">
+        <form action="/admin/projects/create" method="POST">
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="new-title">Title</label>
+            <input type="text" id="new-title" name="title" class="dw-form-input"
+                   placeholder="Project title" required>
+          </div>
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="new-tags">Tags</label>
+            <input type="text" id="new-tags" name="tags" class="dw-form-input"
+                   placeholder="javascript, node.js, physics (comma-separated)">
+          </div>
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="new-content">Content (Markdown)</label>
+            <textarea id="new-content" name="content"
+                      class="dw-form-textarea dw-admin-editor"
+                      placeholder="# My Project&#10;&#10;Write your content in Markdown..."
+                      required></textarea>
+          </div>
+          <button type="submit" class="dw-btn dw-btn-primary">Create Project</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══ PROJECTS TABLE ═══ -->
+    <div class="dw-admin-panel">
+      <h2 class="dw-admin-panel-title">Projects</h2>
+
+      <% if (projects.length > 0) { %>
+        <table class="dw-admin-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Slug</th>
+              <th>Tags</th>
+              <th>Status</th>
+              <th>Published</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% projects.forEach(function(project) { %>
+              <tr>
+                <td><strong><%= project.title %></strong></td>
+                <td><a href="/project/<%= project.slug %>" target="_blank"><%= project.slug %></a></td>
+                <td>
+                  <div class="dw-tags">
+                    <% project.tags.forEach(function(tag) { %>
+                      <span class="dw-tag"><%= tag %></span>
+                    <% }); %>
+                  </div>
+                </td>
+                <td>
+                  <span class="dw-status-badge <%= project.is_hidden ? 'dw-status-hidden' : 'dw-status-visible' %>">
+                    <%= project.is_hidden ? 'Hidden' : 'Visible' %>
+                  </span>
+                </td>
+                <td><%= new Date(project.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) %></td>
+                <td>
+                  <div class="dw-admin-actions">
+                    <button class="dw-btn dw-btn-ghost dw-btn-sm"
+                            onclick="toggleCollapsible('edit-<%= project.id %>')">Edit</button>
+                    <form action="/admin/projects/<%= project.id %>/toggle" method="POST" style="display:inline;">
+                      <button type="submit" class="dw-btn dw-btn-ghost dw-btn-sm">
+                        <%= project.is_hidden ? 'Show' : 'Hide' %>
+                      </button>
+                    </form>
+                    <form action="/admin/projects/<%= project.id %>/delete" method="POST" style="display:inline;"
+                          onsubmit="return confirm('Delete this project permanently?')">
+                      <button type="submit" class="dw-btn dw-btn-danger dw-btn-sm">Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              <!-- Inline Edit Form (Collapsible) -->
+              <tr>
+                <td colspan="6" style="padding: 0; border: none;">
+                  <div class="dw-collapsible-content" id="edit-<%= project.id %>" style="padding: var(--space-lg);">
+                    <form action="/admin/projects/<%= project.id %>/edit" method="POST">
+                      <div class="dw-form-group">
+                        <label class="dw-form-label">Title</label>
+                        <input type="text" name="title" class="dw-form-input" value="<%= project.title %>" required>
+                      </div>
+                      <div class="dw-form-group">
+                        <label class="dw-form-label">Tags</label>
+                        <input type="text" name="tags" class="dw-form-input" value="<%= project.tags.join(', ') %>">
+                      </div>
+                      <div class="dw-form-group">
+                        <label class="dw-form-label">Content (Markdown)</label>
+                        <textarea name="content" class="dw-form-textarea dw-admin-editor" required><%= project.content %></textarea>
+                      </div>
+                      <button type="submit" class="dw-btn dw-btn-primary dw-btn-sm">Save Changes</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p style="color: var(--text-muted); text-align: center; padding: var(--space-xl);">No projects yet.</p>
+      <% } %>
+    </div>
+
+    <!-- ═══ RECENT COMMENTS ═══ -->
+    <div class="dw-admin-panel">
+      <h2 class="dw-admin-panel-title">Recent Comments</h2>
+
+      <% if (comments.length > 0) { %>
+        <table class="dw-admin-table">
+          <thead>
+            <tr>
+              <th>Author</th>
+              <th>Comment</th>
+              <th>Project</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% comments.forEach(function(comment) { %>
+              <tr>
+                <td><strong><%= comment.author %></strong></td>
+                <td><%= comment.content.substring(0, 80) %><%= comment.content.length > 80 ? '...' : '' %></td>
+                <td>
+                  <% if (comment.project_slug) { %>
+                    <a href="/project/<%= comment.project_slug %>#comments" target="_blank"><%= comment.project_title %></a>
+                  <% } else { %>
+                    <span style="color: var(--text-muted);">[Deleted project]</span>
+                  <% } %>
+                </td>
+                <td><%= new Date(comment.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                <td>
+                  <form action="/admin/comments/<%= comment.id %>/delete" method="POST"
+                        onsubmit="return confirm('Delete this comment?')">
+                    <button type="submit" class="dw-btn dw-btn-danger dw-btn-sm">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p style="color: var(--text-muted); text-align: center; padding: var(--space-xl);">No comments yet.</p>
+      <% } %>
+    </div>
+
+    <!-- ═══ CONTACT MESSAGES ═══ -->
+    <div class="dw-admin-panel">
+      <h2 class="dw-admin-panel-title">Contact Messages</h2>
+
+      <% if (messages.length > 0) { %>
+        <table class="dw-admin-table">
+          <thead>
+            <tr>
+              <th>Message</th>
+              <th>Sender IP</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% messages.forEach(function(msg) { %>
+              <tr>
+                <td><%= msg.message.substring(0, 120) %><%= msg.message.length > 120 ? '...' : '' %></td>
+                <td><code><%= msg.sender_ip %></code></td>
+                <td><%= new Date(msg.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %></td>
+                <td>
+                  <form action="/admin/messages/<%= msg.id %>/delete" method="POST"
+                        onsubmit="return confirm('Delete this message?')">
+                    <button type="submit" class="dw-btn dw-btn-danger dw-btn-sm">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p style="color: var(--text-muted); text-align: center; padding: var(--space-xl);">No messages yet.</p>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Collapsible toggle script -->
+  <script>
+    function toggleCollapsible(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle('active');
+    }
+  </script>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>
