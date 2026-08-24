@@ -80,7 +80,7 @@ async function seed() {
     console.log(`[SEED] ${commentCount.count} comments already exist, skipping.`);
   }*/
 
-  console.log('[SEED] Database seeding complete! ✓');
+  console.log('[SEED] Database seeding complete. [OK]');
   process.exit(0);
 }
 

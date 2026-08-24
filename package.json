@@ -10,11 +10,14 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "seed": "node seed.js",
-    "build:js": "node scripts/minify.js"
+    "build:js": "node scripts/minify.js",
+    "bot": "node bot/index.js",
+    "bot:deploy": "node bot/deploy-commands.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
+    "discord.js": "^14.27.0",
     "dotenv": "^17.3.1",
     "ejs": "^5.0.1",
     "express": "^5.2.1",

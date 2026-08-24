@@ -21,10 +21,10 @@
   <article class="dw-project-detail">
     <!-- Flash Messages -->
     <% if (success) { %>
-      <div class="dw-alert dw-alert-success">✓ <%= success %></div>
+      <div class="dw-alert dw-alert-success"><span class="dw-alert-icon dw-alert-icon--success"></span> <%= success %></div>
     <% } %>
     <% if (error) { %>
-      <div class="dw-alert dw-alert-error">✗ <%= error %></div>
+      <div class="dw-alert dw-alert-error"><span class="dw-alert-icon dw-alert-icon--error"></span> <%= error %></div>
     <% } %>
 
     <!-- Project Header -->
@@ -32,7 +32,8 @@
       <h1 class="dw-project-title"><%= project.title %></h1>
       <div class="dw-project-meta">
         <span class="dw-project-meta-item">
-          📅 <%= new Date(project.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+          <span class="dw-meta-date-icon"></span>
+          <%= new Date(project.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
         </span>
         <% if (project.tags && project.tags.length > 0) { %>
           <div class="dw-tags">
@@ -51,7 +52,7 @@
 
     <!-- Comments Section -->
     <section class="dw-comments-section" id="comments">
-      <h2 class="dw-comments-title">Dive Log — <%= comments.length %> <%= comments.length === 1 ? 'entry' : 'entries' %></h2>
+      <h2 class="dw-comments-title">Dive Log -- <%= comments.length %> <%= comments.length === 1 ? 'entry' : 'entries' %></h2>
 
       <% if (comments.length > 0) { %>
         <div class="dw-comment-list">
@@ -80,7 +81,7 @@
             <textarea id="content" name="content" class="dw-form-textarea"
                       placeholder="What do you think about this project?"
                       maxlength="1000" required></textarea>
-            <span class="dw-form-hint">Max 1000 characters · 3 submissions per hour</span>
+            <span class="dw-form-hint">Max 1000 characters -- 3 submissions per hour</span>
           </div>
           <button type="submit" class="dw-btn dw-btn-primary">Submit Entry</button>
         </form>
@@ -89,7 +90,7 @@
 
     <!-- Back Link -->
     <div style="margin-top: var(--space-2xl);">
-      <a href="/" class="dw-btn dw-btn-ghost">← Back to Surface</a>
+      <a href="/" class="dw-btn dw-btn-ghost">Back to Surface</a>
     </div>
   </article>
 

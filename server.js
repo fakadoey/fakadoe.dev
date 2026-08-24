@@ -87,9 +87,9 @@ async function start() {
   try {
     await initDatabase();
     app.listen(PORT, () => {
-      console.log(`\n  ⚓ Deep Water Portfolio running on http://localhost:${PORT}`);
-      console.log(`  🔒 Helmet security headers active`);
-      console.log(`  🛡️  Rate limiting: 100 req/15min global, 3 POST/hr spam\n`);
+      console.log(`\n  [SERVER] Deep Water Portfolio running on http://localhost:${PORT}`);
+      console.log(`  [SECURITY] Helmet security headers active`);
+      console.log(`  [SHIELD] Rate limiting: 100 req/15min global, 3 POST/hr spam\n`);
     });
   } catch (err) {
     console.error('[FATAL] Failed to start server:', err);

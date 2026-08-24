@@ -2,6 +2,7 @@ const Project = require('../models/Project');
 const Comment = require('../models/Comment');
 const ContactMessage = require('../models/ContactMessage');
 const { marked } = require('marked');
+const { notifyContactMessage } = require('../bot/notify');
 
 // Configure marked for safe rendering
 marked.setOptions({
@@ -89,6 +90,15 @@ const pageController = {
     ContactMessage.create({
       sender_ip: senderIp,
       message: message.trim()
+    });
+
+    // Send Discord notification (async, non-blocking)
+    notifyContactMessage({
+      message: message.trim(),
+      senderIp,
+      timestamp: new Date().toISOString()
+    }).catch(err => {
+      console.error('[CONTACT] Discord notification failed:', err.message);
     });
 
     res.redirect('/contact?success=Message sent successfully. Thank you!');

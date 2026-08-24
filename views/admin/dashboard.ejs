@@ -9,16 +9,16 @@
   <div class="dw-admin-container">
     <!-- Admin Header -->
     <div class="dw-admin-header">
-      <h1 class="dw-admin-title">⚓ Command Center</h1>
+      <h1 class="dw-admin-title">Command Center</h1>
       <a href="/admin/logout" class="dw-btn dw-btn-ghost dw-btn-sm">Logout</a>
     </div>
 
     <!-- Flash Messages -->
     <% if (success) { %>
-      <div class="dw-alert dw-alert-success">✓ <%= success %></div>
+      <div class="dw-alert dw-alert-success"><span class="dw-alert-icon dw-alert-icon--success"></span> <%= success %></div>
     <% } %>
     <% if (error) { %>
-      <div class="dw-alert dw-alert-error">✗ <%= error %></div>
+      <div class="dw-alert dw-alert-error"><span class="dw-alert-icon dw-alert-icon--error"></span> <%= error %></div>
     <% } %>
 
     <!-- Stats Cards -->
@@ -39,7 +39,7 @@
 
     <!-- ═══ CREATE NEW PROJECT ═══ -->
     <div class="dw-admin-panel">
-      <button class="dw-collapsible-toggle" onclick="toggleCollapsible('createForm')">
+      <button class="dw-collapsible-toggle" data-toggle="createForm">
         + Create New Project
       </button>
       <div class="dw-collapsible-content" id="createForm">
@@ -103,7 +103,7 @@
                 <td>
                   <div class="dw-admin-actions">
                     <button class="dw-btn dw-btn-ghost dw-btn-sm"
-                            onclick="toggleCollapsible('edit-<%= project.id %>')">Edit</button>
+                            data-toggle="edit-<%= project.id %>">Edit</button>
                     <form action="/admin/projects/<%= project.id %>/toggle" method="POST" style="display:inline;">
                       <button type="submit" class="dw-btn dw-btn-ghost dw-btn-sm">
                         <%= project.is_hidden ? 'Show' : 'Hide' %>
@@ -225,12 +225,19 @@
     </div>
   </div>
 
-  <!-- Collapsible toggle script -->
+  <!-- Collapsible toggle script — uses data-toggle for CSP compliance -->
   <script>
-    function toggleCollapsible(id) {
-      var el = document.getElementById(id);
-      if (el) el.classList.toggle('active');
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      var toggleButtons = document.querySelectorAll('[data-toggle]');
+      toggleButtons.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var targetId = btn.getAttribute('data-toggle');
+          var target = document.getElementById(targetId);
+          if (target) target.classList.toggle('active');
+        });
+      });
+    });
   </script>
 
   <%- include('../partials/footer') %>

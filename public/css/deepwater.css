@@ -11,6 +11,10 @@
   --bg-abyss: #00001a;
 
   /* Typography */
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
   --text-primary: #e0f0ff;
   --text-secondary: #7eb8d8;
   --text-accent: #00e5ff;
@@ -71,7 +75,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
   background-color: var(--bg-depth);
   color: var(--text-primary);
   line-height: 1.7;
@@ -94,7 +98,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-family: var(--font-heading);
   color: var(--text-white);
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -162,11 +166,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-navbar-brand {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-heading);
   font-size: 1.15rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-white);
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -174,8 +178,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-navbar-brand::before {
-  content: '⚓';
-  font-size: 1.2rem;
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-accent);
+  box-shadow: 0 0 8px var(--glow-accent);
+  flex-shrink: 0;
 }
 
 .dw-navbar-brand:hover {
@@ -190,7 +200,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-navbar-links a {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-secondary);
@@ -238,15 +248,34 @@ h1, h2, h3, h4, h5, h6 {
   padding: var(--space-sm);
   background: none;
   border: none;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 .dw-nav-toggle span {
   display: block;
-  width: 24px;
+  width: 22px;
   height: 2px;
   background: var(--text-secondary);
   border-radius: 2px;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-base);
+  transform-origin: center;
+}
+
+/* Hamburger → X animation */
+.dw-nav-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.dw-nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.dw-nav-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
 
@@ -264,8 +293,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-hero-title {
+  font-family: var(--font-heading);
   font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -2px;
   margin-bottom: var(--space-md);
   background: linear-gradient(135deg, var(--text-white) 0%, var(--text-accent) 50%, var(--text-secondary) 100%);
@@ -282,7 +312,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-hero-subtitle {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: var(--text-secondary);
   max-width: 600px;
@@ -291,12 +321,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-hero-depth {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-muted);
   letter-spacing: 3px;
   text-transform: uppercase;
   animation: dw-pulse 3s ease-in-out infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.dw-hero-depth::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid var(--text-muted);
+  animation: dw-depth-bob 2s ease-in-out infinite;
 }
 
 @keyframes dw-pulse {
@@ -336,6 +381,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-section-title {
+  font-family: var(--font-heading);
   font-size: 1.5rem;
   margin-bottom: var(--space-xl);
   color: var(--text-accent);
@@ -357,7 +403,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Project Card Grid ──────────────────────────────────────────── */
 .dw-project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--space-xl);
 }
 
@@ -402,6 +448,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-project-card-title {
+  font-family: var(--font-heading);
   font-size: 1.25rem;
   color: var(--text-white);
   font-weight: 700;
@@ -427,7 +474,7 @@ h1, h2, h3, h4, h5, h6 {
   border-top: 1px solid var(--border-subtle);
   font-size: 0.75rem;
   color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 
@@ -439,7 +486,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-tag {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-accent);
@@ -474,6 +521,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-project-title {
+  font-family: var(--font-heading);
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   margin-bottom: var(--space-md);
   letter-spacing: -1px;
@@ -482,8 +530,9 @@ h1, h2, h3, h4, h5, h6 {
 .dw-project-meta {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--space-lg);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--text-muted);
 }
@@ -494,6 +543,27 @@ h1, h2, h3, h4, h5, h6 {
   gap: var(--space-xs);
 }
 
+/* CSS-based date icon replacing emoji */
+.dw-meta-date-icon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--text-muted);
+  border-radius: 3px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dw-meta-date-icon::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 2px;
+  right: 2px;
+  height: 1.5px;
+  background: var(--text-muted);
+}
+
 /* Markdown content styling */
 .dw-project-content {
   font-size: 1.05rem;
@@ -501,9 +571,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
-.dw-project-content h1 { font-size: 2rem; margin: var(--space-2xl) 0 var(--space-md); }
-.dw-project-content h2 { font-size: 1.5rem; margin: var(--space-xl) 0 var(--space-md); color: var(--text-accent); }
-.dw-project-content h3 { font-size: 1.2rem; margin: var(--space-lg) 0 var(--space-sm); }
+.dw-project-content h1 { font-family: var(--font-heading); font-size: 2rem; margin: var(--space-2xl) 0 var(--space-md); }
+.dw-project-content h2 { font-family: var(--font-heading); font-size: 1.5rem; margin: var(--space-xl) 0 var(--space-md); color: var(--text-accent); }
+.dw-project-content h3 { font-family: var(--font-heading); font-size: 1.2rem; margin: var(--space-lg) 0 var(--space-sm); }
 
 .dw-project-content p {
   margin-bottom: var(--space-md);
@@ -524,7 +594,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-project-content code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85em;
   background: rgba(0, 229, 255, 0.08);
   color: var(--text-accent);
@@ -585,7 +655,7 @@ h1, h2, h3, h4, h5, h6 {
 .dw-project-content th {
   background: var(--surface-glass);
   color: var(--text-accent);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
 }
 
@@ -604,6 +674,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-comments-title {
+  font-family: var(--font-heading);
   font-size: 1.3rem;
   color: var(--text-accent);
   margin-bottom: var(--space-xl);
@@ -612,9 +683,16 @@ h1, h2, h3, h4, h5, h6 {
   gap: var(--space-sm);
 }
 
+/* CSS diamond shape replacing emoji */
 .dw-comments-title::before {
-  content: '◈';
-  font-size: 0.9rem;
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--text-accent);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--glow-accent);
 }
 
 .dw-comment-list {
@@ -633,32 +711,24 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 
-.dw-comment-card::before {
-  content: '▸';
-  position: absolute;
-  left: -12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-accent);
-  font-size: 0.9rem;
-}
-
 .dw-comment-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--space-sm);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
 }
 
 .dw-comment-author {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-accent);
 }
 
 .dw-comment-time {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--text-muted);
 }
@@ -673,7 +743,7 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   padding: var(--space-2xl);
   color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
 }
 
@@ -687,7 +757,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-form-title {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-heading);
   font-size: 1rem;
   color: var(--text-accent);
   margin-bottom: var(--space-lg);
@@ -699,7 +769,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .dw-form-label {
   display: block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-bottom: var(--space-sm);
@@ -715,8 +785,8 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-size: 16px; /* Prevents iOS auto-zoom */
   transition: all var(--transition-fast);
   outline: none;
 }
@@ -738,16 +808,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-form-hint {
+  display: block;
   font-size: 0.7rem;
   color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   margin-top: var(--space-xs);
 }
 
 
 /* ─── Buttons ────────────────────────────────────────────────────── */
 .dw-btn {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -761,6 +832,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: var(--space-sm);
   text-decoration: none;
+  min-height: 44px; /* Accessible touch target */
 }
 
 .dw-btn-primary {
@@ -801,14 +873,15 @@ h1, h2, h3, h4, h5, h6 {
 .dw-btn-sm {
   font-size: 0.7rem;
   padding: var(--space-sm) var(--space-md);
+  min-height: 36px;
 }
 
 
-/* ─── Alerts / Flashes ───────────────────────────────────────────── */
+/* ─── Alert Icons (CSS-only, replacing emojis) ───────────────────── */
 .dw-alert {
   padding: var(--space-md) var(--space-lg);
   border-radius: var(--radius-md);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   margin-bottom: var(--space-lg);
   display: flex;
@@ -828,6 +901,55 @@ h1, h2, h3, h4, h5, h6 {
   color: #ff5050;
 }
 
+/* CSS-only status icons */
+.dw-alert-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.dw-alert-icon--success {
+  border: 2px solid #27c93f;
+}
+
+.dw-alert-icon--success::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 8px;
+  border-right: 2px solid #27c93f;
+  border-bottom: 2px solid #27c93f;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.dw-alert-icon--error {
+  border: 2px solid #ff5050;
+}
+
+.dw-alert-icon--error::before,
+.dw-alert-icon--error::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  background: #ff5050;
+  top: 50%;
+  left: 50%;
+}
+
+.dw-alert-icon--error::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dw-alert-icon--error::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 
 /* ─── Contact Page ───────────────────────────────────────────────── */
 .dw-contact-container {
@@ -839,6 +961,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-contact-title {
+  font-family: var(--font-heading);
   font-size: clamp(1.5rem, 3vw, 2.2rem);
   margin-bottom: var(--space-md);
   text-align: center;
@@ -866,7 +989,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-error-code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: clamp(5rem, 12vw, 10rem);
   font-weight: 800;
   color: var(--text-accent);
@@ -876,6 +999,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-error-title {
+  font-family: var(--font-heading);
   font-size: 1.5rem;
   margin-bottom: var(--space-md);
 }
@@ -897,7 +1021,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--border-subtle);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--text-muted);
 }
@@ -910,8 +1034,15 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.7;
 }
 
+/* CSS triangle replacing emoji */
 .dw-depth-indicator::before {
-  content: '▾';
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--text-accent);
   animation: dw-depth-bob 2s ease-in-out infinite;
 }
 
@@ -971,6 +1102,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-admin-title {
+  font-family: var(--font-heading);
   font-size: 1.8rem;
   color: var(--text-accent);
 }
@@ -991,7 +1123,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-stat-value {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 2.2rem;
   font-weight: 800;
   color: var(--text-accent);
@@ -1000,7 +1132,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-stat-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1016,6 +1148,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-admin-panel-title {
+  font-family: var(--font-heading);
   font-size: 1.1rem;
   color: var(--text-accent);
   margin-bottom: var(--space-lg);
@@ -1037,7 +1170,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-admin-table th {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1055,7 +1188,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-status-badge {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   padding: 2px 8px;
   border-radius: var(--radius-full);
@@ -1097,6 +1230,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-login-title {
+  font-family: var(--font-heading);
   text-align: center;
   font-size: 1.5rem;
   color: var(--text-accent);
@@ -1108,12 +1242,12 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-bottom: var(--space-2xl);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 /* Admin textarea for markdown editor */
 .dw-admin-editor {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   min-height: 200px;
 }
@@ -1127,11 +1261,12 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-md);
   padding: var(--space-md) var(--space-lg);
   color: var(--text-accent);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   cursor: pointer;
   margin-bottom: var(--space-md);
   transition: all var(--transition-fast);
+  min-height: 44px;
 }
 
 .dw-collapsible-toggle:hover {
@@ -1165,6 +1300,19 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid var(--border-glow);
     padding: var(--space-md);
     gap: 0;
+    /* Smooth slide-in animation */
+    animation: dw-slide-in var(--transition-base) ease-out;
+  }
+
+  @keyframes dw-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .dw-navbar-links.open {
@@ -1175,6 +1323,10 @@ h1, h2, h3, h4, h5, h6 {
     padding: var(--space-md);
     border-bottom: 1px solid var(--border-subtle);
     text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .dw-navbar-links a:last-child {
@@ -1200,13 +1352,74 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
   }
 
-  .dw-admin-table {
-    font-size: 0.75rem;
+  /* Admin table → card layout on mobile */
+  .dw-admin-table,
+  .dw-admin-table thead,
+  .dw-admin-table tbody,
+  .dw-admin-table th,
+  .dw-admin-table td,
+  .dw-admin-table tr {
+    display: block;
   }
 
-  .dw-admin-table th,
-  .dw-admin-table td {
+  .dw-admin-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .dw-admin-table tr {
+    margin-bottom: var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
     padding: var(--space-sm);
+    background: var(--surface-input);
+  }
+
+  .dw-admin-table td {
+    padding: var(--space-sm) var(--space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .dw-admin-table td::before {
+    content: attr(data-label);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .dw-admin-table td:last-child {
+    border-bottom: none;
+  }
+
+  .dw-admin-actions {
+    justify-content: flex-end;
+  }
+
+  .dw-project-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .dw-contact-container {
+    padding: var(--space-2xl) var(--space-md);
   }
 }
 
@@ -1223,6 +1436,11 @@ h1, h2, h3, h4, h5, h6 {
     padding: var(--space-md);
   }
 
+  .dw-comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .dw-gdpr-banner {
     border-radius: var(--radius-lg);
     flex-direction: column;
@@ -1236,5 +1454,21 @@ h1, h2, h3, h4, h5, h6 {
 
   .dw-gdpr-banner p {
     white-space: normal;
+  }
+
+  .dw-admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dw-stat-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    text-align: left;
+  }
+
+  .dw-stat-value {
+    font-size: 1.5rem;
+    margin-bottom: 0;
   }
 }

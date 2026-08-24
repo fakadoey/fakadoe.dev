@@ -16,14 +16,14 @@
 
   <div class="dw-contact-container">
     <h1 class="dw-contact-title">Send a Signal</h1>
-    <p class="dw-contact-subtitle">Drop a message into the deep. No account needed — just your words.</p>
+    <p class="dw-contact-subtitle">Drop a message into the deep. No account needed -- just your words.</p>
 
     <!-- Flash Messages -->
     <% if (success) { %>
-      <div class="dw-alert dw-alert-success">✓ <%= success %></div>
+      <div class="dw-alert dw-alert-success"><span class="dw-alert-icon dw-alert-icon--success"></span> <%= success %></div>
     <% } %>
     <% if (error) { %>
-      <div class="dw-alert dw-alert-error">✗ <%= error %></div>
+      <div class="dw-alert dw-alert-error"><span class="dw-alert-icon dw-alert-icon--error"></span> <%= error %></div>
     <% } %>
 
     <div class="dw-form">
@@ -34,7 +34,7 @@
                     placeholder="Write something..."
                     maxlength="2000" required
                     style="min-height: 180px;"></textarea>
-          <span class="dw-form-hint">Max 2000 characters · 3 submissions per hour · Your IP is logged for abuse prevention</span>
+          <span class="dw-form-hint">Max 2000 characters -- 3 submissions per hour -- Your IP is logged for abuse prevention</span>
         </div>
         <button type="submit" class="dw-btn dw-btn-primary">Transmit Message</button>
       </form>
