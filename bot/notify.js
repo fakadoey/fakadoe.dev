@@ -17,13 +17,13 @@ let rest = null;
  */
 function getRestClient() {
   if (rest) return rest;
-  
+
   const token = process.env.DISCORD_BOT_TOKEN;
   if (!token) {
     console.warn('[DISCORD] DISCORD_BOT_TOKEN not set — contact notifications disabled.');
     return null;
   }
-  
+
   rest = new REST({ version: '10' }).setToken(token);
   return rest;
 }
@@ -33,10 +33,11 @@ function getRestClient() {
  * 
  * @param {Object} params
  * @param {string} params.message - The contact message content
+ * @param {string} params.username - The sender's username
  * @param {string} params.senderIp - The sender's IP address
  * @param {string} params.timestamp - ISO timestamp of the message
  */
-async function notifyContactMessage({ message, senderIp, timestamp }) {
+async function notifyContactMessage({ message, username, senderIp, timestamp }) {
   const channelId = process.env.DISCORD_NOTIFICATION_CHANNEL_ID;
   if (!channelId) {
     console.warn('[DISCORD] DISCORD_NOTIFICATION_CHANNEL_ID not set — skipping notification.');

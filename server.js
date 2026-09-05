@@ -73,7 +73,7 @@ app.use((err, req, res, next) => {
     title: 'System Failure',
     statusCode: err.status || 500,
     message: process.env.NODE_ENV === 'production'
-      ? 'Something went wrong in the depths.'
+      ? 'Something went wrong... I swear I did fix this'
       : err.message,
     pageTitle: 'Error — fakadoe.dev',
     currentPath: req.path
@@ -87,7 +87,7 @@ async function start() {
   try {
     await initDatabase();
     app.listen(PORT, () => {
-      console.log(`\n  [SERVER] Deep Water Portfolio running on http://localhost:${PORT}`);
+      console.log(`\n  [SERVER] Website running over at http://localhost:${PORT}`);
       console.log(`  [SECURITY] Helmet security headers active`);
       console.log(`  [SHIELD] Rate limiting: 100 req/15min global, 3 POST/hr spam\n`);
     });
