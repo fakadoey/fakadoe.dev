@@ -1,7 +1,9 @@
-<nav class="dw-navbar">
+<a href="#main-content" class="dw-skip-link">Skip to content</a>
+
+<nav class="dw-navbar" aria-label="Main navigation">
   <a href="/" class="dw-navbar-brand">fakadoe.dev</a>
 
-  <button class="dw-nav-toggle" id="navToggle" aria-label="Toggle navigation">
+  <button class="dw-nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
     <span></span>
     <span></span>
     <span></span>
@@ -19,8 +21,9 @@
     var links = document.getElementById('navLinks');
     if (toggle && links) {
       toggle.addEventListener('click', function() {
-        links.classList.toggle('open');
+        var isOpen = links.classList.toggle('open');
         toggle.classList.toggle('active');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
     }
   });

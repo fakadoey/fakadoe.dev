@@ -6,32 +6,34 @@
 <body>
   <%- include('../partials/header') %>
 
-  <div class="dw-login-container">
-    <div class="dw-login-card">
-      <h1 class="dw-login-title">Command Center</h1>
-      <p class="dw-login-subtitle">Authorized personnel only</p>
+  <main id="main-content">
+    <div class="dw-login-container">
+      <div class="dw-login-card">
+        <h1 class="dw-login-title">Command Center</h1>
+        <p class="dw-login-subtitle">Authorized personnel only</p>
 
-      <% if (error) { %>
-        <div class="dw-alert dw-alert-error"><span class="dw-alert-icon dw-alert-icon--error"></span> <%= error %></div>
-      <% } %>
+        <% if (error) { %>
+          <div class="dw-alert dw-alert-error" role="alert"><span class="dw-alert-icon dw-alert-icon--error"></span> <%= error %></div>
+        <% } %>
 
-      <form action="/admin/login" method="POST">
-        <div class="dw-form-group">
-          <label class="dw-form-label" for="username">Username</label>
-          <input type="text" id="username" name="username" class="dw-form-input"
-                 placeholder="Enter username" required autocomplete="username">
-        </div>
-        <div class="dw-form-group">
-          <label class="dw-form-label" for="password">Password</label>
-          <input type="password" id="password" name="password" class="dw-form-input"
-                 placeholder="Enter password" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="dw-btn dw-btn-primary" style="width: 100%; justify-content: center;">
-          Authenticate
-        </button>
-      </form>
+        <form action="/admin/login" method="POST">
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="username">Username</label>
+            <input type="text" id="username" name="username" class="dw-form-input"
+                   placeholder="Enter username" required autocomplete="username">
+          </div>
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="password">Password</label>
+            <input type="password" id="password" name="password" class="dw-form-input"
+                   placeholder="Enter password" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="dw-btn dw-btn-primary" style="width: 100%; justify-content: center;">
+            Authenticate
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
+  </main>
 
   <%- include('../partials/footer') %>
 </body>

@@ -7,31 +7,29 @@
 /* ─── Design Tokens ──────────────────────────────────────────────── */
 :root {
   /* Depth colors — dynamically updated by scroll script */
-  --bg-depth: #0077be;
-  --bg-abyss: #00001a;
+  --bg-depth: #1a3a52;
+  --bg-abyss: #0c0e14;
 
   /* Typography */
   --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Source Serif 4', 'Georgia', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 
-  --text-primary: #e0f0ff;
-  --text-secondary: #7eb8d8;
-  --text-accent: #00e5ff;
-  --text-muted: #4a7a99;
-  --text-white: #ffffff;
+  --text-primary: #d8d2c8;
+  --text-secondary: #9a9084;
+  --text-accent: #d4a574;
+  --text-muted: #6b6359;
+  --text-white: #f0ece4;
 
   /* Surfaces */
-  --surface-glass: rgba(0, 20, 40, 0.55);
-  --surface-glass-hover: rgba(0, 30, 55, 0.7);
-  --surface-solid: rgba(0, 12, 25, 0.9);
-  --surface-input: rgba(0, 20, 40, 0.4);
+  --surface-glass: rgba(18, 22, 30, 0.6);
+  --surface-glass-hover: rgba(26, 32, 42, 0.75);
+  --surface-solid: rgba(12, 14, 20, 0.92);
+  --surface-input: rgba(18, 22, 30, 0.45);
 
-  /* Borders & Glows */
-  --border-glow: rgba(0, 229, 255, 0.12);
-  --border-subtle: rgba(0, 150, 200, 0.08);
-  --glow-accent: rgba(0, 229, 255, 0.3);
-  --glow-soft: rgba(0, 180, 255, 0.08);
+  /* Borders */
+  --border-accent: rgba(212, 165, 116, 0.18);
+  --border-subtle: rgba(154, 144, 132, 0.1);
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -43,21 +41,20 @@
   --space-3xl: 4rem;
 
   /* Radii */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
   --radius-full: 50px;
 
-  /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Transitions — snappy, purposeful */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Shadows */
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border-glow);
-  --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-glow);
-  --shadow-glow: 0 0 20px var(--glow-accent);
+  /* Shadows — no glow, just depth */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--border-accent);
+  --shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px var(--border-accent);
 }
 
 
@@ -89,12 +86,11 @@ body {
 a {
   color: var(--text-accent);
   text-decoration: none;
-  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
 a:hover {
   color: var(--text-white);
-  text-shadow: 0 0 12px var(--glow-accent);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -111,41 +107,57 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* ─── Particles Background ───────────────────────────────────────── */
-.dw-particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
+/* ─── Accessibility ──────────────────────────────────────────────── */
 
-.dw-particle {
+/* Screen-reader only utility */
+.dw-sr-only {
   position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--text-accent), transparent 70%);
-  opacity: 0;
-  animation: dw-float linear infinite;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.dw-particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-duration: 18s; animation-delay: 0s; }
-.dw-particle:nth-child(2) { width: 3px; height: 3px; left: 25%; animation-duration: 22s; animation-delay: 3s; }
-.dw-particle:nth-child(3) { width: 5px; height: 5px; left: 40%; animation-duration: 15s; animation-delay: 1s; }
-.dw-particle:nth-child(4) { width: 3px; height: 3px; left: 55%; animation-duration: 20s; animation-delay: 5s; }
-.dw-particle:nth-child(5) { width: 4px; height: 4px; left: 70%; animation-duration: 17s; animation-delay: 2s; }
-.dw-particle:nth-child(6) { width: 3px; height: 3px; left: 85%; animation-duration: 24s; animation-delay: 4s; }
-.dw-particle:nth-child(7) { width: 5px; height: 5px; left: 15%; animation-duration: 19s; animation-delay: 7s; }
-.dw-particle:nth-child(8) { width: 4px; height: 4px; left: 60%; animation-duration: 21s; animation-delay: 6s; }
+/* Skip-to-content link */
+.dw-skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  z-index: 10000;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--text-accent);
+  color: var(--bg-abyss);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  text-decoration: none;
+  transition: top var(--transition-fast);
+}
 
-@keyframes dw-float {
-  0%   { transform: translateY(110vh) scale(0); opacity: 0; }
-  10%  { opacity: 0.6; }
-  50%  { opacity: 0.3; }
-  90%  { opacity: 0.5; }
-  100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+.dw-skip-link:focus {
+  top: 0;
+  color: var(--bg-abyss);
+}
+
+/* Focus-visible styles for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--text-accent);
+  outline-offset: 2px;
+}
+
+/* Remove default focus ring for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 
@@ -159,9 +171,9 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   padding: var(--space-md) var(--space-xl);
   background: var(--surface-glass);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border-glow);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--border-accent);
   transition: background var(--transition-base);
 }
 
@@ -184,13 +196,11 @@ h1, h2, h3, h4, h5, h6 {
   height: 8px;
   border-radius: 50%;
   background: var(--text-accent);
-  box-shadow: 0 0 8px var(--glow-accent);
   flex-shrink: 0;
 }
 
 .dw-navbar-brand:hover {
-  text-shadow: 0 0 15px var(--glow-accent);
-  color: var(--text-white);
+  color: var(--text-accent);
 }
 
 .dw-navbar-links {
@@ -209,7 +219,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 1.5px;
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast);
   position: relative;
 }
 
@@ -221,9 +231,8 @@ h1, h2, h3, h4, h5, h6 {
   width: 0;
   height: 2px;
   background: var(--text-accent);
-  transition: all var(--transition-base);
+  transition: width var(--transition-base), transform var(--transition-base);
   transform: translateX(-50%);
-  box-shadow: 0 0 8px var(--glow-accent);
 }
 
 .dw-navbar-links a:hover::after,
@@ -285,11 +294,13 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  min-height: 70vh;
+  min-height: 65vh;
   padding: var(--space-3xl) var(--space-xl);
-  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .dw-hero-title {
@@ -298,76 +309,24 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: -2px;
   margin-bottom: var(--space-md);
-  background: linear-gradient(135deg, var(--text-white) 0%, var(--text-accent) 50%, var(--text-secondary) 100%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: dw-shimmer 6s ease-in-out infinite;
-}
-
-@keyframes dw-shimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
+  color: var(--text-white);
 }
 
 .dw-hero-subtitle {
   font-family: var(--font-body);
-  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--text-secondary);
-  max-width: 600px;
+  max-width: 520px;
   margin-bottom: var(--space-2xl);
   font-weight: 400;
 }
 
-.dw-hero-depth {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  animation: dw-pulse 3s ease-in-out infinite;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-}
-
-.dw-hero-depth::after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 7px solid var(--text-muted);
-  animation: dw-depth-bob 2s ease-in-out infinite;
-}
-
-@keyframes dw-pulse {
-  0%, 100% { opacity: 0.5; }
-  50%      { opacity: 1; }
-}
-
-.dw-sonar-ring {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border: 1px solid var(--border-glow);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: dw-sonar 4s ease-out infinite;
-  pointer-events: none;
-}
-
-.dw-sonar-ring:nth-child(2) { animation-delay: 1.3s; }
-.dw-sonar-ring:nth-child(3) { animation-delay: 2.6s; }
-
-@keyframes dw-sonar {
-  0%   { width: 100px; height: 100px; opacity: 0.6; border-color: var(--text-accent); }
-  100% { width: 600px; height: 600px; opacity: 0; }
+.dw-hero-rule {
+  width: 60px;
+  height: 2px;
+  background: var(--text-accent);
+  border: none;
+  margin-bottom: var(--space-lg);
 }
 
 
@@ -396,7 +355,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 30px;
   height: 2px;
   background: var(--text-accent);
-  box-shadow: 0 0 10px var(--glow-accent);
 }
 
 
@@ -409,19 +367,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .dw-project-card {
   background: var(--surface-glass);
-  border: 1px solid var(--border-glow);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-md);
   padding: var(--space-xl);
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  transition: all var(--transition-base);
+  transition: transform var(--transition-base), border-color var(--transition-base), background var(--transition-base);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .dw-project-card::before {
@@ -430,17 +386,17 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--text-accent), transparent);
+  height: 2px;
+  background: var(--text-accent);
   opacity: 0;
   transition: opacity var(--transition-base);
 }
 
 .dw-project-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   background: var(--surface-glass-hover);
-  border-color: rgba(0, 229, 255, 0.25);
-  box-shadow: var(--shadow-elevated), 0 0 30px rgba(0, 229, 255, 0.05);
+  border-color: rgba(212, 165, 116, 0.3);
+  box-shadow: var(--shadow-elevated);
 }
 
 .dw-project-card:hover::before {
@@ -490,18 +446,18 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-accent);
-  background: rgba(0, 229, 255, 0.08);
-  border: 1px solid rgba(0, 229, 255, 0.15);
+  background: rgba(212, 165, 116, 0.08);
+  border: 1px solid rgba(212, 165, 116, 0.18);
   padding: 2px 10px;
   border-radius: var(--radius-full);
   letter-spacing: 0.5px;
   text-transform: lowercase;
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 
 .dw-tag:hover {
-  background: rgba(0, 229, 255, 0.15);
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
+  background: rgba(212, 165, 116, 0.15);
+  border-color: rgba(212, 165, 116, 0.3);
 }
 
 
@@ -517,7 +473,7 @@ h1, h2, h3, h4, h5, h6 {
 .dw-project-header {
   margin-bottom: var(--space-2xl);
   padding-bottom: var(--space-xl);
-  border-bottom: 1px solid var(--border-glow);
+  border-bottom: 1px solid var(--border-accent);
 }
 
 .dw-project-title {
@@ -596,16 +552,16 @@ h1, h2, h3, h4, h5, h6 {
 .dw-project-content code {
   font-family: var(--font-mono);
   font-size: 0.85em;
-  background: rgba(0, 229, 255, 0.08);
+  background: rgba(212, 165, 116, 0.08);
   color: var(--text-accent);
   padding: 2px 7px;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(212, 165, 116, 0.12);
 }
 
 .dw-project-content pre {
   background: var(--surface-solid);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
   border-radius: var(--radius-md);
   padding: var(--space-lg);
   margin: var(--space-lg) 0;
@@ -618,9 +574,10 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--text-accent), transparent);
+  width: 3px;
+  height: 100%;
+  background: var(--text-accent);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
 }
 
 .dw-project-content pre code {
@@ -648,7 +605,7 @@ h1, h2, h3, h4, h5, h6 {
 .dw-project-content th,
 .dw-project-content td {
   padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
   text-align: left;
 }
 
@@ -662,7 +619,7 @@ h1, h2, h3, h4, h5, h6 {
 .dw-project-content hr {
   border: none;
   height: 1px;
-  background: var(--border-glow);
+  background: var(--border-accent);
   margin: var(--space-2xl) 0;
 }
 
@@ -670,7 +627,7 @@ h1, h2, h3, h4, h5, h6 {
 .dw-comments-section {
   margin-top: var(--space-3xl);
   padding-top: var(--space-2xl);
-  border-top: 1px solid var(--border-glow);
+  border-top: 1px solid var(--border-accent);
 }
 
 .dw-comments-title {
@@ -683,7 +640,7 @@ h1, h2, h3, h4, h5, h6 {
   gap: var(--space-sm);
 }
 
-/* CSS diamond shape replacing emoji */
+/* CSS diamond shape */
 .dw-comments-title::before {
   content: '';
   display: inline-block;
@@ -692,7 +649,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 2px solid var(--text-accent);
   transform: rotate(45deg);
   flex-shrink: 0;
-  box-shadow: 0 0 6px var(--glow-accent);
 }
 
 .dw-comment-list {
@@ -751,7 +707,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Forms ──────────────────────────────────────────────────────── */
 .dw-form {
   background: var(--surface-glass);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
 }
@@ -787,14 +743,13 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 16px; /* Prevents iOS auto-zoom */
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
   outline: none;
 }
 
 .dw-form-input:focus,
 .dw-form-textarea:focus {
   border-color: var(--text-accent);
-  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1), 0 0 15px rgba(0, 229, 255, 0.05);
 }
 
 .dw-form-input::placeholder,
@@ -827,7 +782,7 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
@@ -836,33 +791,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-btn-primary {
-  background: linear-gradient(135deg, var(--text-accent), #0088cc);
+  background: var(--text-accent);
   color: var(--bg-abyss);
-  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
 }
 
 .dw-btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(0, 229, 255, 0.35);
+  transform: translateY(-1px);
+  background: #c2915e;
   color: var(--bg-abyss);
 }
 
 .dw-btn-danger {
-  background: rgba(255, 80, 80, 0.15);
-  color: #ff5050;
-  border: 1px solid rgba(255, 80, 80, 0.25);
+  background: rgba(200, 75, 75, 0.15);
+  color: #c84b4b;
+  border: 1px solid rgba(200, 75, 75, 0.25);
 }
 
 .dw-btn-danger:hover {
-  background: rgba(255, 80, 80, 0.25);
-  box-shadow: 0 0 15px rgba(255, 80, 80, 0.1);
-  color: #ff5050;
+  background: rgba(200, 75, 75, 0.25);
+  color: #c84b4b;
 }
 
 .dw-btn-ghost {
   background: transparent;
   color: var(--text-secondary);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
 }
 
 .dw-btn-ghost:hover {
@@ -890,15 +843,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-alert-success {
-  background: rgba(39, 201, 63, 0.1);
-  border: 1px solid rgba(39, 201, 63, 0.25);
-  color: #27c93f;
+  background: rgba(92, 160, 88, 0.1);
+  border: 1px solid rgba(92, 160, 88, 0.25);
+  color: #5ca058;
 }
 
 .dw-alert-error {
-  background: rgba(255, 80, 80, 0.1);
-  border: 1px solid rgba(255, 80, 80, 0.25);
-  color: #ff5050;
+  background: rgba(200, 75, 75, 0.1);
+  border: 1px solid rgba(200, 75, 75, 0.25);
+  color: #c84b4b;
 }
 
 /* CSS-only status icons */
@@ -914,7 +867,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-alert-icon--success {
-  border: 2px solid #27c93f;
+  border: 2px solid #5ca058;
 }
 
 .dw-alert-icon--success::after {
@@ -922,13 +875,13 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   width: 5px;
   height: 8px;
-  border-right: 2px solid #27c93f;
-  border-bottom: 2px solid #27c93f;
+  border-right: 2px solid #5ca058;
+  border-bottom: 2px solid #5ca058;
   transform: rotate(45deg) translate(-1px, -1px);
 }
 
 .dw-alert-icon--error {
-  border: 2px solid #ff5050;
+  border: 2px solid #c84b4b;
 }
 
 .dw-alert-icon--error::before,
@@ -937,7 +890,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 8px;
   height: 2px;
-  background: #ff5050;
+  background: #c84b4b;
   top: 50%;
   left: 50%;
 }
@@ -993,7 +946,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: clamp(5rem, 12vw, 10rem);
   font-weight: 800;
   color: var(--text-accent);
-  opacity: 0.15;
+  opacity: 0.12;
   line-height: 1;
   margin-bottom: var(--space-md);
 }
@@ -1034,7 +987,7 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.7;
 }
 
-/* CSS triangle replacing emoji */
+/* CSS triangle for depth indicator */
 .dw-depth-indicator::before {
   content: '';
   display: inline-block;
@@ -1043,12 +996,6 @@ h1, h2, h3, h4, h5, h6 {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 6px solid var(--text-accent);
-  animation: dw-depth-bob 2s ease-in-out infinite;
-}
-
-@keyframes dw-depth-bob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(3px); }
 }
 
 
@@ -1059,8 +1006,8 @@ h1, h2, h3, h4, h5, h6 {
   left: 50%;
   transform: translateX(-50%);
   background: var(--surface-solid);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glow);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-accent);
   padding: var(--space-md) var(--space-xl);
   border-radius: var(--radius-full);
   display: none;
@@ -1075,7 +1022,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.8rem;
   color: var(--text-secondary);
   margin: 0;
-  white-space: nowrap;
 }
 
 .dw-gdpr-banner .dw-btn {
@@ -1098,7 +1044,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   margin-bottom: var(--space-2xl);
   padding-bottom: var(--space-lg);
-  border-bottom: 1px solid var(--border-glow);
+  border-bottom: 1px solid var(--border-accent);
 }
 
 .dw-admin-title {
@@ -1116,7 +1062,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .dw-stat-card {
   background: var(--surface-glass);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
   border-radius: var(--radius-md);
   padding: var(--space-lg);
   text-align: center;
@@ -1141,7 +1087,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .dw-admin-panel {
   background: var(--surface-glass);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
   margin-bottom: var(--space-xl);
@@ -1187,6 +1133,11 @@ h1, h2, h3, h4, h5, h6 {
   flex-wrap: wrap;
 }
 
+/* Inline form in admin actions — replaces inline style="display:inline" */
+.dw-admin-inline-form {
+  display: inline;
+}
+
 .dw-status-badge {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -1197,15 +1148,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dw-status-visible {
-  background: rgba(39, 201, 63, 0.15);
-  color: #27c93f;
-  border: 1px solid rgba(39, 201, 63, 0.25);
+  background: rgba(92, 160, 88, 0.15);
+  color: #5ca058;
+  border: 1px solid rgba(92, 160, 88, 0.25);
 }
 
 .dw-status-hidden {
-  background: rgba(255, 180, 0, 0.15);
-  color: #ffb400;
-  border: 1px solid rgba(255, 180, 0, 0.25);
+  background: rgba(200, 160, 60, 0.15);
+  color: #c8a03c;
+  border: 1px solid rgba(200, 160, 60, 0.25);
 }
 
 /* Admin Login */
@@ -1223,7 +1174,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   max-width: 400px;
   background: var(--surface-glass);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
   border-radius: var(--radius-lg);
   padding: var(--space-2xl);
   box-shadow: var(--shadow-elevated);
@@ -1257,7 +1208,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   text-align: left;
   background: var(--surface-input);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-accent);
   border-radius: var(--radius-md);
   padding: var(--space-md) var(--space-lg);
   color: var(--text-accent);
@@ -1265,7 +1216,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.85rem;
   cursor: pointer;
   margin-bottom: var(--space-md);
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast);
   min-height: 44px;
 }
 
@@ -1297,22 +1248,9 @@ h1, h2, h3, h4, h5, h6 {
     right: 0;
     flex-direction: column;
     background: var(--surface-solid);
-    border-bottom: 1px solid var(--border-glow);
+    border-bottom: 1px solid var(--border-accent);
     padding: var(--space-md);
     gap: 0;
-    /* Smooth slide-in animation */
-    animation: dw-slide-in var(--transition-base) ease-out;
-  }
-
-  @keyframes dw-slide-in {
-    from {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 
   .dw-navbar-links.open {
@@ -1342,8 +1280,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .dw-hero {
-    min-height: 50vh;
+    min-height: 45vh;
     padding: var(--space-2xl) var(--space-md);
+    align-items: flex-start;
   }
 
   .dw-footer {

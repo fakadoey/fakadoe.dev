@@ -2,7 +2,7 @@
  * Deep Water — Scroll Depth Color Transition
  * 
  * Listens to scroll position and mathematically interpolates the background
- * color from surface cyan (#0077be) to abyssal black-blue (#00001a).
+ * color from surface navy (#1a3a52) to abyssal dark (#0c0e14).
  * 
  * This file is the SOURCE — it gets minified by Terser into depth.min.js
  * so client-side users cannot easily read the logic.
@@ -10,8 +10,8 @@
 (function () {
   'use strict';
 
-  var surface = [0, 119, 190];  // #0077be — Surface cyan
-  var abyss = [0, 0, 26];      // #00001a — Abyssal black-blue
+  var surface = [26, 58, 82];   // #1a3a52 — Deep navy surface
+  var abyss = [12, 14, 20];     // #0c0e14 — Abyssal dark
 
   var root = document.documentElement;
   var indicator = null;

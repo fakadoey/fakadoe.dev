@@ -6,12 +6,14 @@
 <body>
   <%- include('./partials/header') %>
 
-  <div class="dw-error-container">
-    <div class="dw-error-code"><%= statusCode %></div>
-    <h1 class="dw-error-title"><%= title %></h1>
-    <p class="dw-error-message"><%= message %></p>
-    <a href="/" class="dw-btn dw-btn-primary">← Return to Surface</a>
-  </div>
+  <main id="main-content">
+    <div class="dw-error-container">
+      <div class="dw-error-code"><%= statusCode %></div>
+      <h1 class="dw-error-title"><%= title %></h1>
+      <p class="dw-error-message"><%= message %></p>
+      <a href="/" class="dw-btn dw-btn-primary"><span class="dw-sr-only">Back to </span>Return to Surface</a>
+    </div>
+  </main>
 
   <%- include('./partials/footer') %>
 </body>

@@ -6,40 +6,35 @@
 <body>
   <%- include('./partials/header') %>
 
-  <!-- Floating Particles -->
-  <div class="dw-particles">
-    <div class="dw-particle"></div>
-    <div class="dw-particle"></div>
-    <div class="dw-particle"></div>
-    <div class="dw-particle"></div>
-  </div>
+  <main id="main-content">
+    <div class="dw-contact-container">
+      <h1 class="dw-contact-title">Send a Signal</h1>
+      <p class="dw-contact-subtitle">Drop a message into the deep. No account needed -- just your words.</p>
 
-  <div class="dw-contact-container">
-    <h1 class="dw-contact-title">Send a Signal</h1>
-    <p class="dw-contact-subtitle">Drop a message into the deep. No account needed -- just your words.</p>
+      <!-- Flash Messages -->
+      <% if (success) { %>
+        <div class="dw-alert dw-alert-success" role="alert"><span class="dw-alert-icon dw-alert-icon--success"></span> <%= success %></div>
+      <% } %>
+      <% if (error) { %>
+        <div class="dw-alert dw-alert-error" role="alert"><span class="dw-alert-icon dw-alert-icon--error"></span> <%= error %></div>
+      <% } %>
 
-    <!-- Flash Messages -->
-    <% if (success) { %>
-      <div class="dw-alert dw-alert-success"><span class="dw-alert-icon dw-alert-icon--success"></span> <%= success %></div>
-    <% } %>
-    <% if (error) { %>
-      <div class="dw-alert dw-alert-error"><span class="dw-alert-icon dw-alert-icon--error"></span> <%= error %></div>
-    <% } %>
-
-    <div class="dw-form">
-      <form action="/contact" method="POST">
-        <div class="dw-form-group">
-          <label class="dw-form-label" for="message">Your Message</label>
-          <textarea id="message" name="message" class="dw-form-textarea"
-                    placeholder="Write something..."
-                    maxlength="2000" required
-                    style="min-height: 180px;"></textarea>
-          <span class="dw-form-hint">Max 2000 characters -- 3 submissions per hour -- Your IP is logged for abuse prevention</span>
-        </div>
-        <button type="submit" class="dw-btn dw-btn-primary">Transmit Message</button>
-      </form>
+      <div class="dw-form">
+        <form action="/contact" method="POST">
+          <div class="dw-form-group">
+            <label class="dw-form-label" for="message">Your Message</label>
+            <textarea id="message" name="message" class="dw-form-textarea"
+                      placeholder="Write something..."
+                      maxlength="2000" required
+                      aria-describedby="message-hint"
+                      style="min-height: 180px;"></textarea>
+            <span class="dw-form-hint" id="message-hint">Max 2000 characters -- 3 submissions per hour -- Your IP is logged for abuse prevention</span>
+          </div>
+          <button type="submit" class="dw-btn dw-btn-primary">Transmit Message</button>
+        </form>
+      </div>
     </div>
-  </div>
+  </main>
 
   <%- include('./partials/footer') %>
 </body>

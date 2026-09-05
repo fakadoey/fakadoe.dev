@@ -3,10 +3,16 @@
 <meta name="description" content="<%= typeof pageDescription !== 'undefined' ? pageDescription : 'Portfolio and blog by fakadoe. Dive into projects and explore the deep.' %>">
 <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'fakadoe.dev' %></title>
 
-<!-- Fonts: Space Grotesk (headings) + Inter (body) + JetBrains Mono (code/labels) -->
+<!-- Open Graph -->
+<meta property="og:title" content="<%= typeof pageTitle !== 'undefined' ? pageTitle : 'fakadoe.dev' %>">
+<meta property="og:description" content="<%= typeof pageDescription !== 'undefined' ? pageDescription : 'Portfolio and blog by fakadoe. Dive into projects and explore the deep.' %>">
+<meta property="og:type" content="website">
+<meta property="og:url" content="<%= typeof currentPath !== 'undefined' ? 'https://fakadoe.dev' + currentPath : 'https://fakadoe.dev' %>">
+
+<!-- Fonts: Space Grotesk (headings) + Source Serif 4 (body) + JetBrains Mono (code/labels) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Deep Water Theme -->
 <link rel="stylesheet" href="/css/deepwater.css">
