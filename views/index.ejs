@@ -1,54 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('./partials/head') %>
 </head>
+
 <body>
   <%- include('./partials/header') %>
 
-  <main id="main-content">
-    <!-- Hero Section -->
-    <section class="dw-hero">
-      <hr class="dw-hero-rule">
-      <h1 class="dw-hero-title">fakadoe.dev</h1>
-      <p class="dw-hero-subtitle">
-        Full-stack developer building tools, systems, and experiments. 
-        Browse the work below.
-      </p>
-    </section>
+    <main id="main-content">
+      <!-- Hero Section -->
+      <section class="dw-hero">
+        <hr class="dw-hero-rule">
+        <h1 class="dw-hero-title">fakadoe.dev</h1>
+        <p class="dw-hero-subtitle">
+          Engineering student with a passion for building cool stuff. Get in touch!
+        </p>
+      </section>
 
-    <!-- Projects Grid -->
-    <section class="dw-section">
-      <h2 class="dw-section-title">Projects</h2>
+      <!-- Projects Grid -->
+      <section class="dw-section">
+        <h2 class="dw-section-title">Projects</h2>
 
-      <% if (projects && projects.length > 0) { %>
-        <div class="dw-project-grid">
-          <% projects.forEach(function(project) { %>
-            <a href="/project/<%= project.slug %>" class="dw-project-card" id="project-<%= project.slug %>">
-              <h3 class="dw-project-card-title"><%= project.title %></h3>
-              <p class="dw-project-card-excerpt">
-                <%= project.content.replace(/[#*`\[\]|>_~]/g, '').substring(0, 160) %>...
-              </p>
-              <div class="dw-tags">
-                <% project.tags.forEach(function(tag) { %>
-                  <span class="dw-tag"><%= tag %></span>
-                <% }); %>
-              </div>
-              <div class="dw-project-card-meta">
-                <span><%= new Date(project.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
-                <span>Read more</span>
-              </div>
-            </a>
-          <% }); %>
-        </div>
-      <% } else { %>
-        <div class="dw-no-comments">
-          <p>No projects yet. Check back soon.</p>
-        </div>
-      <% } %>
-    </section>
-  </main>
+        <% if (projects && projects.length> 0) { %>
+          <div class="dw-project-grid">
+            <% projects.forEach(function(project) { %>
+              <a href="/project/<%= project.slug %>" class="dw-project-card" id="project-<%= project.slug %>">
+                <h3 class="dw-project-card-title">
+                  <%= project.title %>
+                </h3>
+                <p class="dw-project-card-excerpt">
+                  <%= project.content.replace(/[#*`\[\]|>_~]/g, '').substring(0, 160) %>...
+                </p>
+                <div class="dw-tags">
+                  <% project.tags.forEach(function(tag) { %>
+                    <span class="dw-tag">
+                      <%= tag %>
+                    </span>
+                    <% }); %>
+                </div>
+                <div class="dw-project-card-meta">
+                  <span>
+                    <%= new Date(project.published_at).toLocaleDateString('en-US', { year: 'numeric' , month: 'short' ,
+                      day: 'numeric' }) %>
+                  </span>
+                  <span>Read more</span>
+                </div>
+              </a>
+              <% }); %>
+          </div>
+          <% } else { %>
+            <div class="dw-no-comments">
+              <p>No projects yet. Check back soon.</p>
+            </div>
+            <% } %>
+      </section>
+    </main>
 
-  <%- include('./partials/footer') %>
+    <%- include('./partials/footer') %>
 </body>
+
 </html>
